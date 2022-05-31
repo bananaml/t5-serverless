@@ -7,7 +7,7 @@ from transformers import T5ForConditionalGeneration
 
 def download_model():
     # do a dry run of loading the huggingface model, which will download weights
-    model = T5ForConditionalGeneration.from_pretrained('bigscience/T0_3B')
+    model = T5ForConditionalGeneration.from_pretrained('t5-small')
 
 if __name__ == "__main__":
     download_model()
