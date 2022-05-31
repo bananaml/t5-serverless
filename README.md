@@ -1,5 +1,5 @@
 
-# serverless-template
+# T5 serverless-template
 
 Setup and host your ML on Banana in minutes
 
