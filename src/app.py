@@ -3,7 +3,7 @@ from warmup import load_model
 from transformers import AutoTokenizer
 # do the warmup step globally, to have a reuseable model instance
 model = load_model()
-tokenizer = AutoTokenizer.from_pretrained("bigscience/T0_3B")
+tokenizer = AutoTokenizer.from_pretrained("t5-small")
 app = Sanic("my_app")
 
 def run_model(input,max_length=None,min_length=None,temp=0.9,topP=0.9,topK=50):
