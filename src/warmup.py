@@ -8,7 +8,7 @@ import torch
 def load_model():
 
     # load the model from cache or local file to the CPU
-    model = T5ForConditionalGeneration.from_pretrained('bigscience/T0_3B').cuda()
+    model = T5ForConditionalGeneration.from_pretrained('t5-small').cuda()
 
     # transfer the model to the GPU
     # N/A for this example, it's already on the GPU
