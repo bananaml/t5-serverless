@@ -1,20 +1,12 @@
 from sanic import Sanic, response
+from sanic.response import json as json_response
 from warmup import load_model
 from transformers import AutoTokenizer
+from run import run_model
 # do the warmup step globally, to have a reuseable model instance
 model = load_model()
 tokenizer = AutoTokenizer.from_pretrained("t5-small")
 app = Sanic("my_app")
-
-def run_model(input,max_length=None,min_length=None,temp=0.9,topP=0.9,topK=50):
-    #move the input tokens to the first gpu
-    input_tokens = tokenizer.encode(input, return_tensors="pt").to("cuda:0")
-    
-    output = model.generate(input_tokens,do_sample=True,max_length=max_length,min_length=min_length,temperature=temp,top_p=topP,top_k = topK)
-
-    res = tokenizer.batch_decode(output, skip_special_tokens=True)
-    return res
-
 
 @app.route('/healthcheck', methods=["GET"])
 def healthcheck(request):
@@ -32,9 +24,9 @@ def inference(request):
     if prompt == None:
         return response.json({'message': "No prompt provided"})
     
-    output = run_model(prompt)
+    output = run_model(model,tokenizer,prompt)
     response = {"output": output}
-    return response.json(output) # Do not edit - returning a dictionary as JSON is a required interface
+    return json_response(response) # Do not edit - returning a dictionary as JSON is a required interface
 
 
 if __name__ == '__main__':
